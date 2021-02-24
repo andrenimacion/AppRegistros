@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="profileImage_description" />
+    <string name="welcome_message">Bienvenido!</string>
+    <string name="nombre_value">"Nombre: "</string>
+    <string name="ci_txtValue">"C.I.: "</string>
+    <string name="horaEntrada_txtValue">Hora Entrada:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lector_qr">Lector QR</string>
+    <string name="avatar_description">Imagen avatar de perfil</string>
+    <string name="entrance_button_value">Ingresar</string>
 </resources>

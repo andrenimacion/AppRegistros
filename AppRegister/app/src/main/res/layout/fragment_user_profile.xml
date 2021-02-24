@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserProfile">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/avatar_image"
+        android:layout_width="261dp"
+        android:layout_height="279dp"
+        android:layout_marginStart="28dp"
+        android:contentDescription="@string/avatar_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/nombre_textView"
+        style="@style/style_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/nombre_value"
+        app:layout_constraintEnd_toStartOf="@+id/nombre_textValue"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/avatar_image"
+        app:layout_constraintTop_toTopOf="@+id/avatar_image" />
+
+    <TextView
+        android:id="@+id/nombre_textValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nombre_textView"
+        app:layout_constraintTop_toTopOf="@+id/nombre_textView" />
+
+    <TextView
+        android:id="@+id/horaEntrada_textView"
+        style="@style/style_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/horaEntrada_txtValue"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar_image"
+        app:layout_constraintEnd_toStartOf="@+id/horaEntrada_textValue"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ci_textView" />
+
+    <TextView
+        android:id="@+id/ci_textValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/horaEntrada_textValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/nombre_textValue"
+        app:layout_constraintTop_toBottomOf="@+id/nombre_textValue" />
+
+    <TextView
+        android:id="@+id/horaEntrada_textValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/horaEntrada_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ci_textValue" />
+
+    <TextView
+        android:id="@+id/ci_textView"
+        style="@style/style_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/ci_txtValue"
+        app:layout_constraintBaseline_toBaselineOf="@+id/ci_textValue"
+        app:layout_constraintEnd_toStartOf="@+id/ci_textValue"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/nombre_textView" />
+
+    <TextView
+        android:id="@+id/textView8"
+        style="@style/style_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="128dp"
+        android:text="@string/welcome_message"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/avatar_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.964" />
+
+    <Button
+        android:id="@+id/entrance_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/entrance_button_value"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horaEntrada_textValue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

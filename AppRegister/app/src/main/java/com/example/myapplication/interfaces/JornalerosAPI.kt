@@ -1,6 +1,7 @@
 package com.example.myapplication.interfaces
 
 import com.example.myapplication.models.Jornalero
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,6 +16,6 @@ interface JornalerosAPI {
     @GET("/api/jornaleros/{id}")
     fun getJornaleros(@Path("id") id:Int):Call<Jornalero>
 
-    @POST("/api/jornaleros/{id}")
-    fun postJornaleros(@Path("id") id:Int, @Body jornalero:Jornalero?):Call<Jornalero>
+    @POST("/api/AR_dp08r/VerificatorPersonal")
+    fun postJornaleros(@Body jornalero:Jornalero?):Call<String>
 }

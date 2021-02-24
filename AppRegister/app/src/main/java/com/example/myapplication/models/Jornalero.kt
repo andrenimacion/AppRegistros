@@ -1,8 +1,24 @@
 package com.example.myapplication.models
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 data class Jornalero (
-        val id: Int,
-        val nombre: String,
-        val apellido: String,
-        val cond_jor: String
-        )
+        @SerializedName("codjor")
+        @Expose
+        private val id: String,
+        @SerializedName("cedula")
+        @Expose
+        var cedula: String,
+        @SerializedName("nombre")
+        @Expose
+        var nombre: String,
+        @SerializedName("apellido")
+        @Expose
+        var apellido: String,
+        @SerializedName("cond_jor")
+        @Expose
+        var cond_jor: String
+        ){
+
+}
