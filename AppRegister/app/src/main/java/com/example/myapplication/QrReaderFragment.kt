@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Path
 import android.os.Bundle
@@ -17,6 +18,7 @@ import androidx.navigation.findNavController
 import com.budiyev.android.codescanner.*
 import com.example.myapplication.interfaces.JornalerosAPI
 import com.example.myapplication.interfaces.LaboresAPI
+import com.example.myapplication.interfaces.RegistroPesadaAPI
 import com.example.myapplication.models.Jornalero
 import com.google.gson.GsonBuilder
 import com.google.zxing.Result
@@ -64,6 +66,7 @@ class QrReaderFragment : Fragment(){
             .build()
     }
 
+    @SuppressLint("ShowToast")
     private fun codeScanner(scanner_view: CodeScannerView, view: View) {
         codeScanner = CodeScanner(fActivity, scanner_view)
         codeScanner.apply {
@@ -77,11 +80,19 @@ class QrReaderFragment : Fragment(){
             isFlashEnabled = false
 
             //Aqui se especifica que se hace despues de leer el codigo QR
+
             decodeCallback = DecodeCallback {
                 fActivity.runOnUiThread {
                     val jornalero = tryGetUser(it)
-                    //texto.text = it.text
-                    view.findNavController().navigate(QrReaderFragmentDirections.actionQrReaderFragmentToUserProfile(jornalero))
+                    if(jornalero.cedula.isNotEmpty()){
+                        if(getTransact(it).equals("_POST_")){
+                            view.findNavController().navigate(QrReaderFragmentDirections.actionQrReaderFragmentToUserProfile(jornalero))
+                        }else{
+                            view.findNavController().navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWeightActivity())
+                        }
+                    }else{
+                        Toast.makeText(fActivity, "Error en búsqueda de usuario", Toast.LENGTH_SHORT)
+                    }
 
                 }
             }
@@ -152,33 +163,18 @@ class QrReaderFragment : Fragment(){
     }
     private fun tryGetUser(userCode: Result): Jornalero {
         var jornalero = Jornalero(userCode.text, "", "", "", "")
-        val response = getRetrofit().create(JornalerosAPI::class.java).postJornaleros(jornalero).enqueue(
-                object : Callback<String> {
-                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                        Log.d("En response", response.body().isNullOrEmpty().toString())
-                        texto.text = response.body()
-                        val result = response.body()?.trim()?.split(" ")
-
-                        result?.forEach {
-                            Log.d("Result", it)
-                            val res = it.split(":")
-                            Log.d("valores", res[0])
-                            var iter = res.iterator()
-                            while(iter.hasNext()){
-                                when(iter.next()){
-                                    "cedula" -> jornalero.cedula = iter.next()
-                                    "nombre" -> jornalero.nombre = iter.next()
-                                    "apellido" -> jornalero.apellido = iter.next()
-                                    "cond_jor" -> jornalero.cond_jor = iter.next()
-                                }
-                            }
+        val response = getRetrofit().create(JornalerosAPI::class.java).getJornaleros(userCode.text).enqueue(
+                object : Callback<Jornalero> {
+                    override fun onResponse(call: Call<Jornalero>, response: Response<Jornalero>) {
+                        if(response.isSuccessful){
+                            Log.i("En response", response.body().toString())
+                            jornalero = response.body()!!
+                            texto.text = jornalero.toString()
+                            Toast.makeText(fActivity, response.message(), Toast.LENGTH_SHORT)
                         }
-                        texto.text = jornalero.toString()
-
-                        Toast.makeText(fActivity, response.message(), Toast.LENGTH_SHORT)
                     }
 
-                    override fun onFailure(call: Call<String>, t: Throwable) {
+                    override fun onFailure(call: Call<Jornalero>, t: Throwable) {
                         Log.d("En Failure", t.toString())
                         Log.d("En Failure", t.message)
                         Toast.makeText(fActivity, t.message, Toast.LENGTH_SHORT)
@@ -189,8 +185,27 @@ class QrReaderFragment : Fragment(){
         return jornalero
     }
 
+    private fun getTransact(userCode: Result): String{
+        var typeTransact:String = "";
+        val response = getRetrofit().create(RegistroPesadaAPI::class.java).getTypeTransact(userCode.text).enqueue(
+            object:Callback<String>{
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if(response.isSuccessful){
+                        typeTransact = response.body() as String
+                    }
+                }
+                @SuppressLint("ShowToast")
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("On Failure", t.message)
+                    Toast.makeText(fActivity,t.message, Toast.LENGTH_SHORT)
+                }
 
-    private fun getContent(){
+            }
+        )
+        return typeTransact;
+    }
+
+   /* private fun getContent(){
 
         GlobalScope.launch(Dispatchers.IO){
             val response = getRetrofit().create(LaboresAPI::class.java).getLabores().awaitResponse()
@@ -207,7 +222,7 @@ class QrReaderFragment : Fragment(){
             }
         }
 
-    }
+    }*/
 
 
 }

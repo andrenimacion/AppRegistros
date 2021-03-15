@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="userInfo"
+            type="com.example.myapplication.models.Jornalero" />
+        <variable
+            name="iniTime"
+            type="String" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
@@ -39,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
+        android:text="@={userInfo.nombre}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/nombre_textView"
         app:layout_constraintTop_toTopOf="@+id/nombre_textView" />
@@ -62,6 +72,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
+        android:text="@={userInfo.cedula}"
         app:layout_constraintBottom_toTopOf="@+id/horaEntrada_textValue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/nombre_textValue"
@@ -72,6 +83,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
+        android:text="@{iniTime}"
         app:layout_constraintBottom_toBottomOf="@+id/horaEntrada_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/ci_textValue" />
@@ -114,3 +126,4 @@
         app:layout_constraintTop_toBottomOf="@+id/horaEntrada_textValue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,9 +1,13 @@
 package com.example.myapplication.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-data class Jornalero (
+@Parcelize
+data class Jornalero(
         @SerializedName("codjor")
         @Expose
         private val id: String,
@@ -19,6 +23,6 @@ data class Jornalero (
         @SerializedName("cond_jor")
         @Expose
         var cond_jor: String
-        ){
+        ):Parcelable{
 
 }
