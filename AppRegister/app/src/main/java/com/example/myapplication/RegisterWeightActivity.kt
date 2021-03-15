@@ -1,32 +1,43 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.databinding.FragmentRegisterWeightActivityBinding
+import com.example.myapplication.interfaces.LaboresAPI
+import com.example.myapplication.models.Labor
+import com.example.myapplication.viewmodels.RegisterActivitiyViewModel
+import com.google.gson.GsonBuilder
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.util.EnumSet.of
+import java.util.Optional.of
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterWeightActivity.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterWeightActivity : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var binding: FragmentRegisterWeightActivityBinding
+    private var arrayAdapter: ArrayAdapter<Labor>? = null
+    private val viewModel: RegisterActivitiyViewModel by lazy{
+        ViewModelProvider(this).get(RegisterActivitiyViewModel::class.java)
+    }
+    private var laboresList: List<Labor> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -34,26 +45,30 @@ class RegisterWeightActivity : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register_weight_activity, container, false)
+        binding = FragmentRegisterWeightActivityBinding.inflate(inflater)
+        //binding = DataBindingUtil.inflate(inflater,R.layout.fragment_register_weight_activity, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+        Log.i("Antes de view", "AQUI ESTOY")
+        Log.i("Despues de view", "AQUI ESTOY")
+        Log.i("ListLenght", viewModel.listaLabores.value?.size.toString())
+        viewModel.listaLabores.value?.forEach {
+            Log.i("Here", it.toString())
+        }
+        Log.i("Status", viewModel.status.value.toString())
+        arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
+            viewModel.listaLabores.value as MutableList<Labor>
+        )
+        binding.spinnerLabores.adapter = arrayAdapter
+        
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterWeightActivity.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegisterWeightActivity().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
+
+
+
 }

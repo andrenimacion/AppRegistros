@@ -1,3 +1,4 @@
+
 package com.example.myapplication
 
 import android.content.pm.PackageManager
@@ -20,6 +21,7 @@ import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.models.Jornalero
 import com.example.myapplication.models.Labor
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_register_weight_activity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,16 +34,20 @@ private const val CAMERA_REQUEST_CODE = 101
 const val BASE_URL = "https://alp-cloud.com:8449"
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var codeScanner:CodeScanner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val fe = DateFun()
+        fe.date()
 
-        //val binding = DataBindingUtil.setContentView<>()
+        text_horaEntrada
+
+        Log.i("TAG", fe.date())
     }
 
-}
+
+    }
 
 
 

@@ -10,4 +10,11 @@
     <string name="lector_qr">Lector QR</string>
     <string name="avatar_description">Imagen avatar de perfil</string>
     <string name="entrance_button_value">Ingresar</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="btn_cerrar">Cerrar</string>
+    <string name="label_labor">Labor</string>
+    <string name="template_name_jornalero">name_jornalero</string>
+    <string name="label_fecha">Fecha</string>
+    <string name="text_horaFinal">Hora Final:</string>
+    <string name="text_cantidad">Cantidad</string>
 </resources>

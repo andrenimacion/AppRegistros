@@ -17,4 +17,9 @@ interface RegistroPesadaAPI {
 
     @PUT("/api/AR_dp08r/updateworkermodel/{id}")
     fun updateWeightRegister(@Path("id") id:Int, @Body register: RegistroPesada?): Call<RegistroPesada>
+
+    @GET("/api/AR_dp08r/getvalidations/{valor}")
+    fun getTypeTransact(@Path("valor") valor:String): Call<String>
+
+
 }
