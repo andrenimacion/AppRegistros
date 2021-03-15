@@ -60,7 +60,8 @@ class RegisterWeightActivity : Fragment() {
             viewModel.listaLabores.value as MutableList<Labor>
         )
         binding.spinnerLabores.adapter = arrayAdapter
-        
+
+        binding.textFecha.text = viewModel.DateF.value
         return binding.root
     }
 

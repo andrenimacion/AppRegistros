@@ -13,7 +13,7 @@ class DateFun {
         val fecha = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         val currentDate = fecha.format(Date())
 
-        Log.i("TAG", currentDate)
+        //Log.i("TAG", currentDate)
 
         return currentDate;
 

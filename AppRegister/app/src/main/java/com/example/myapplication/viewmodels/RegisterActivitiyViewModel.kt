@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.BASE_URL
+import com.example.myapplication.DateFun
 import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.models.Labor
 import com.google.gson.GsonBuilder
@@ -35,9 +36,15 @@ class RegisterActivitiyViewModel : ViewModel(){
         val status: LiveData<LaboresAPIStatus>
         get() = _status
 
+    private val _DateF = MutableLiveData<String>()
+        val DateF: LiveData<String>
+        get() = _DateF
+
     init{
         Log.i("Init viewmodel", "Inicia el view model")
         _listaLabores.value = mutableListOf()
+        _DateF.value = DateFun().date()
+
         getLaboresList()
     }
 
