@@ -42,8 +42,8 @@ class MainActivity : AppCompatActivity() {
         fe.date()
 
         text_horaEntrada
+        //Log.i("TAG", fe.date())
 
-        Log.i("TAG", fe.date())
     }
 
 
