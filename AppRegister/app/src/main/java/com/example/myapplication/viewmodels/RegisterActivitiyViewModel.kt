@@ -42,7 +42,7 @@ class RegisterActivitiyViewModel : ViewModel(){
     }
 
 
-    private fun getLaboresList(){
+    /*private fun getLaboresList(){
         viewModelScope.launch {
             _status.value = LaboresAPIStatus.LOADING
             try {
@@ -56,6 +56,11 @@ class RegisterActivitiyViewModel : ViewModel(){
                 _listaLabores.value = ArrayList()
             }
         }
+    }*/
+    private fun getLaboresList(){
+        LaboresAPI.retrofitService.getLaboresSynchro().execute()
+         
+
     }
 
     override fun onCleared() {
