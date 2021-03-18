@@ -20,16 +20,16 @@ import com.example.myapplication.interfaces.JornalerosAPI
 import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.interfaces.RegistroPesadaAPI
 import com.example.myapplication.models.Jornalero
+import com.example.myapplication.models.ResponseText
 import com.google.gson.GsonBuilder
 import com.google.zxing.Result
 import kotlinx.android.synthetic.main.fragment_qr_reader.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.lang.Exception
 
 
 private const val CAMERA_REQUEST_CODE = 101
@@ -80,20 +80,40 @@ class QrReaderFragment : Fragment(){
             isFlashEnabled = false
 
             //Aqui se especifica que se hace despues de leer el codigo QR
-
             decodeCallback = DecodeCallback {
                 fActivity.runOnUiThread {
-                    val jornalero = tryGetUser(it)
-                    if(jornalero.cedula.isNotEmpty()){
-                        if(getTransact(it).equals("_POST_")){
-                            view.findNavController().navigate(QrReaderFragmentDirections.actionQrReaderFragmentToUserProfile(jornalero))
-                        }else{
-                            view.findNavController().navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWeightActivity())
+                    CoroutineScope(IO).launch {
+                        val jornalero = async {
+                            tryGetUser(it)
+                        }.await()
+                        Log.i("jornalero", jornalero.toString())
+                        if (jornalero.cedula.isNotEmpty()) {
+                            Log.i("Jornalero", "Not empty jornalero")
+                                val typeT = async {
+                                    getTransact(it)
+                                }.await()
+                                Log.i("Type", typeT)
+                            if (typeT == "_POST_") {
+                                Log.i("POST", "Aqui estoy")
+                                view.findNavController().navigate(
+                                    QrReaderFragmentDirections.actionQrReaderFragmentToUserProfile(
+                                        jornalero
+                                    )
+                                )
+                            } else {
+                                Log.i("PUT", "Aqui estoy PUT")
+                                view.findNavController()
+                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWeightActivity())
+                            }
+                        } else {
+                            Log.i("Jornalero E", "Empty jornalero")
+                            Toast.makeText(
+                                fActivity,
+                                "Error en búsqueda de usuario",
+                                Toast.LENGTH_SHORT
+                            )
                         }
-                    }else{
-                        Toast.makeText(fActivity, "Error en búsqueda de usuario", Toast.LENGTH_SHORT)
                     }
-
                 }
             }
 
@@ -161,8 +181,20 @@ class QrReaderFragment : Fragment(){
             }
         }
     }
-    private fun tryGetUser(userCode: Result): Jornalero {
-        var jornalero = Jornalero(userCode.text, "", "", "", "")
+
+
+    private fun tryGetUser(userCode: Result):Jornalero{
+        var jornalero:Jornalero = Jornalero(userCode.text, "", "", "", "")
+        try{
+            val response = getRetrofit().create(JornalerosAPI::class.java).getJornaleros(userCode.text).execute()
+            jornalero = response.body()!!
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return jornalero
+    }
+    /*private fun tryGetUser(userCode: Result): Jornalero {
+        var jornalero:Jornalero = Jornalero(userCode.text, "", "", "", "")
         val response = getRetrofit().create(JornalerosAPI::class.java).getJornaleros(userCode.text).enqueue(
                 object : Callback<Jornalero> {
                     override fun onResponse(call: Call<Jornalero>, response: Response<Jornalero>) {
@@ -181,12 +213,25 @@ class QrReaderFragment : Fragment(){
                     }
                 })
 
-        Log.d("Final try user", response.toString())
+        Log.d("Final try user", jornalero.toString())
         return jornalero
+    }*/
+
+    private fun getTransact(userCode: Result):String{
+        lateinit var typeTransact:String
+        try{
+            val response = getRetrofit().create(RegistroPesadaAPI::class.java).getTypeTransact(userCode.text).execute()
+            response.body()!!.forEach { typeTransact = it.httpResponseText }
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return typeTransact
     }
 
-    private fun getTransact(userCode: Result): String{
-        var typeTransact:String = "";
+    /*private fun getTransact(userCode: Result): String{
+        //val transactID = getTransactID(userCode.text)
+        lateinit var typeTransact:String
         val response = getRetrofit().create(RegistroPesadaAPI::class.java).getTypeTransact(userCode.text).enqueue(
             object:Callback<String>{
                 override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -203,7 +248,7 @@ class QrReaderFragment : Fragment(){
             }
         )
         return typeTransact;
-    }
+    }*/
 
    /* private fun getContent(){
 

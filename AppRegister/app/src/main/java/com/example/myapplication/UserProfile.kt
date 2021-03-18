@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.databinding.FragmentUserProfileBinding
-import com.example.myapplication.interfaces.LaboresAPI
+import com.example.myapplication.interfaces.RegistroPesadaAPI
 import com.example.myapplication.models.Jornalero
+import com.example.myapplication.models.RegistroPesada
 import com.google.gson.GsonBuilder
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -48,14 +51,11 @@ class UserProfile : Fragment() {
             binding.iniTime = stringTime
         }
 
+
         return binding.root
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
 
     private fun getRetrofit(): Retrofit {
         val gson = GsonBuilder()
@@ -69,7 +69,26 @@ class UserProfile : Fragment() {
     }
 
     private fun acceptEntrance(){
+        binding.entranceButton.setOnClickListener {
 
+        }
+    }
+    private fun postEntrance(){
+        var registro:RegistroPesada = RegistroPesada(binding.userInfo as Jornalero)
+        getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_POST_", registro).enqueue(
+            object: Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if(response.isSuccessful){
+
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            }
+        )
     }
 
 }

@@ -13,7 +13,7 @@ interface JornalerosAPI {
     @GET("/api/jornaleros")
     fun getJornaleros():Call<List<Jornalero>>
 
-    @GET("/api/jornaleros/{id}")
+    @GET("/api/AR_dp08r/VerificatorPersonal/{id}")
     fun getJornaleros(@Path("id") id:String):Call<Jornalero>
 
     @POST("/api/AR_dp08r/VerificatorPersonal")

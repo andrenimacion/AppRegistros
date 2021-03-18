@@ -1,26 +1,18 @@
 package com.example.myapplication.viewmodels
 
-import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.myapplication.BASE_URL
 import com.example.myapplication.DateFun
 import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.models.Labor
-import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.lang.Exception
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 enum class LaboresAPIStatus {LOADING, DONE, ERROR}
 class RegisterActivitiyViewModel : ViewModel(){
 
@@ -44,19 +36,31 @@ class RegisterActivitiyViewModel : ViewModel(){
         Log.i("Init viewmodel", "Inicia el view model")
         _listaLabores.value = mutableListOf()
         _DateF.value = DateFun().date()
-
-        getLaboresList()
+        CoroutineScope(IO).launch {
+            Log.i("Init viewmodel", "Coroutine Scope")
+            withContext(Dispatchers.Default) {
+                getLaboresList()
+            }
+        }
     }
 
 
     /*private fun getLaboresList(){
+        Log.i("Here", "LaboresList")
         viewModelScope.launch {
             _status.value = LaboresAPIStatus.LOADING
             try {
-                var laboresResult = LaboresAPI.retrofitService.getLabores()
-                Log.i("Here", laboresResult.toString())
-                val response = laboresResult
-                _listaLabores.value = response
+                runCatching {
+                    Log.i("Here", "Entre")
+                    var laboresResult = LaboresAPI.retrofitService.getLabores()
+                    Log.i("Here", laboresResult.toString())
+                    laboresResult
+                }.onSuccess {
+                    _listaLabores.value = it
+                }.onFailure {
+                    it.message
+                    _status.value = LaboresAPIStatus.ERROR
+                }
                 _status.value = LaboresAPIStatus.DONE
             } catch (e :Exception){
                 _status.value = LaboresAPIStatus.ERROR
@@ -65,8 +69,12 @@ class RegisterActivitiyViewModel : ViewModel(){
         }
     }*/
     private fun getLaboresList(){
-        LaboresAPI.retrofitService.getLaboresSynchro().execute()
-         
+        try {
+            val response = LaboresAPI.retrofitService.getLaboresSynchro().execute()
+            _listaLabores.value = response.body()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
     }
 

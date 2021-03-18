@@ -50,7 +50,6 @@ class RegisterWeightActivity : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         Log.i("Antes de view", "AQUI ESTOY")
-        Log.i("Despues de view", "AQUI ESTOY")
         Log.i("ListLenght", viewModel.listaLabores.value?.size.toString())
         viewModel.listaLabores.value?.forEach {
             Log.i("Here", it.toString())
