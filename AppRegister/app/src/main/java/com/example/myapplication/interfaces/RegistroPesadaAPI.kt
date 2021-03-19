@@ -20,7 +20,7 @@ interface RegistroPesadaAPI {
     fun updateWeightRegister(@Path("id") id:Int, @Body register: RegistroPesada?): Call<RegistroPesada>*/
 
     @POST("/api/AR_dp08r/UpWorkers/{value}")
-    fun postWeightRegister(@Path("value") value:String, @Body register:RegistroPesada): Call<String>
+    suspend fun postWeightRegister(@Path("value") value:String, @Body register:RegistroPesada): String
 
     @GET("/api/AR_dp08r/getworkersCODJOR/{valor}")
     fun getTypeTransact(@Path("valor") valor:String): Call<List<ResponseText>>

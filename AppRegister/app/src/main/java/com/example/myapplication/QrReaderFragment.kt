@@ -2,7 +2,6 @@ package com.example.myapplication
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.graphics.Path
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,13 +16,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import com.budiyev.android.codescanner.*
 import com.example.myapplication.interfaces.JornalerosAPI
-import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.interfaces.RegistroPesadaAPI
 import com.example.myapplication.models.Jornalero
-import com.example.myapplication.models.ResponseText
 import com.google.gson.GsonBuilder
 import com.google.zxing.Result
-import kotlinx.android.synthetic.main.fragment_qr_reader.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import retrofit2.*
@@ -103,7 +99,7 @@ class QrReaderFragment : Fragment(){
                             } else {
                                 Log.i("PUT", "Aqui estoy PUT")
                                 view.findNavController()
-                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWeightActivity())
+                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWeightActivity(jornalero))
                             }
                         } else {
                             Log.i("Jornalero E", "Empty jornalero")

@@ -4,14 +4,21 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.myapplication.BASE_URL
 import com.example.myapplication.DateFun
+import com.example.myapplication.interfaces.JornalerosAPI
 import com.example.myapplication.interfaces.LaboresAPI
+import com.example.myapplication.interfaces.RegistroPesadaAPI
+import com.example.myapplication.models.Jornalero
 import com.example.myapplication.models.Labor
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.example.myapplication.models.RegistroPesada
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 enum class LaboresAPIStatus {LOADING, DONE, ERROR}
 class RegisterActivitiyViewModel : ViewModel(){
@@ -32,15 +39,50 @@ class RegisterActivitiyViewModel : ViewModel(){
         val DateF: LiveData<String>
         get() = _DateF
 
+    private val _jornalero = MutableLiveData<Jornalero>()
+        val jornalero: LiveData<Jornalero>
+        get() = _jornalero
+
+    private var _registro = MutableLiveData<RegistroPesada>()
+        val registro: LiveData<RegistroPesada>
+        get() = _registro
+
+    private fun getRetrofit(): Retrofit {
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+    }
+
+
     init{
         Log.i("Init viewmodel", "Inicia el view model")
         _listaLabores.value = mutableListOf()
         _DateF.value = DateFun().date()
+        //constructRegister()
         CoroutineScope(IO).launch {
             Log.i("Init viewmodel", "Coroutine Scope")
-            withContext(Dispatchers.Default) {
+            async{
                 getLaboresList()
+            }.await()
+        }
+    }
+    private fun constructRegister(){
+        //_registro.value = RegistroPesada(_jornalero.value!!)
+        //_registro.value!!.fecha = DateFun().date()!!
+    }
+
+    fun postRegister(){
+        try {
+            viewModelScope.launch {
+                getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_PUT_",_registro.value!!)
             }
+        }catch (e:Exception){
+
         }
     }
 

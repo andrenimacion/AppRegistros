@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.databinding.FragmentUserProfileBinding
 import com.example.myapplication.interfaces.RegistroPesadaAPI
@@ -51,6 +52,11 @@ class UserProfile : Fragment() {
             binding.iniTime = stringTime
         }
 
+        binding.entranceButton.setOnClickListener {
+            //postEntrance()
+        }
+
+
 
         return binding.root
 
@@ -68,12 +74,7 @@ class UserProfile : Fragment() {
             .build()
     }
 
-    private fun acceptEntrance(){
-        binding.entranceButton.setOnClickListener {
-
-        }
-    }
-    private fun postEntrance(){
+    /*private fun postEntrance(){
         var registro:RegistroPesada = RegistroPesada(binding.userInfo as Jornalero)
         getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_POST_", registro).enqueue(
             object: Callback<String> {
@@ -89,6 +90,10 @@ class UserProfile : Fragment() {
 
             }
         )
+    }*/
+
+    private fun cancelEntrance(){
+        view?.findNavController()?.navigate(UserProfileDirections.actionUserProfileToQrReaderFragment())
     }
 
 }

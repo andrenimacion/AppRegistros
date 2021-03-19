@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 data class RegistroPesada(
     val id: Int,
-    val fecha: LocalDateTime?,
+    var fecha: LocalDateTime?,
     val cod_usuario: Jornalero?,
     val cod_labor: Labor?,
     val cantidad: Float,

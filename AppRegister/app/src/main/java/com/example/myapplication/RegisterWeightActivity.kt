@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.myapplication.databinding.FragmentRegisterWeightActivityBinding
 import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.models.Labor
@@ -61,11 +62,23 @@ class RegisterWeightActivity : Fragment() {
         binding.spinnerLabores.adapter = arrayAdapter
 
         binding.textFecha.text = viewModel.DateF.value
+
+        binding.btnCerrar.setOnClickListener {
+            view?.findNavController()?.navigate(RegisterWeightActivityDirections.actionRegisterWeightActivityToQrReaderFragment())
+        }
+
+        binding.btnGuardar.setOnClickListener {
+            viewModel.postRegister()
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    private fun saveRegister(){
 
     }
 
