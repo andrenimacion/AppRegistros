@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.renderscript.ScriptGroup
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -20,8 +21,6 @@ import com.budiyev.android.codescanner.ScanMode
 import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.models.Jornalero
 import com.example.myapplication.models.Labor
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_register_weight_activity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -40,8 +39,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val fe = DateFun()
         fe.date()
-
-        text_horaEntrada
+        //text_horaEntrada
         //Log.i("TAG", fe.date())
 
     }
