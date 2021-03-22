@@ -8,8 +8,8 @@
 
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/scanner_view"
-        android:layout_width="852dp"
-        android:layout_height="456dp"
+        android:layout_width="782dp"
+        android:layout_height="401dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="25dp"
@@ -18,7 +18,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintVertical_bias="0.52" >
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-1000px"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/vineta" />
+    </com.budiyev.android.codescanner.CodeScannerView>
 
     <TextView
         android:id="@+id/lector_qr"
@@ -56,13 +65,6 @@
         android:maxWidth="100px"
         android:maxHeight="100px">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/vineta"
-            android:layout_marginLeft="-1000px"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
