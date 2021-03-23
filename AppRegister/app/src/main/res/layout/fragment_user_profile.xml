@@ -8,6 +8,9 @@
         <variable
             name="iniTime"
             type="String" />
+        <variable
+            name="viewModel"
+            type="com.example.myapplication.viewmodels.UserProfileViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
