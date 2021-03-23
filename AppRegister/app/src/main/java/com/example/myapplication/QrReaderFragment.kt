@@ -99,7 +99,7 @@ class QrReaderFragment : Fragment(){
                             } else {
                                 Log.i("PUT", "Aqui estoy PUT")
                                 view.findNavController()
-                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWeightActivity(jornalero))
+                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWFragment())
                             }
                         } else {
                             Log.i("Jornalero E", "Empty jornalero")
