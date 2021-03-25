@@ -34,7 +34,7 @@ class RegisterWFragment : Fragment(){
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_register_w, container, false)
         binding.viewModel = viewModel
-        register = RegistroPesada(binding.userInfo)
+        register = RegistroPesada(binding.userInfo!!)
         arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
             viewModel.listaLabores.value as MutableList<Labor>
         )

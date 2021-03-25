@@ -104,7 +104,7 @@ class UserProfile : Fragment() {
 
 
     private fun cancelEntrance(){
-        view?.findNavController()?.navigate(UserProfileDirections.actionUserProfileToQrReaderFragment())
+        view?.findNavController()?.navigate(UserProfileDirections.actionUserProfileToQrReaderFragment(binding.userInfo!!))
     }
 
 }
