@@ -17,4 +17,5 @@
     <string name="label_fecha">Fecha</string>
     <string name="text_horaFinal">Hora Final:</string>
     <string name="text_cantidad">Cantidad</string>
+    <string name="label_observ">Observaciones</string>
 </resources>

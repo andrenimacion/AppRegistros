@@ -18,29 +18,18 @@
         android:textAlignment="center"
         tools:context=".RegisterWeightActivity">
 
-        <TimePicker
-            android:id="@+id/text_horaFinal"
-            android:layout_width="425dp"
-            android:layout_height="280dp"
-            android:layout_marginEnd="72dp"
-            android:ems="10"
-            android:inputType="time"
-            app:layout_constraintBottom_toBottomOf="@+id/label_horaFinal_salida"
-            app:layout_constraintEnd_toEndOf="@+id/spinner_labores"
-            app:layout_constraintTop_toTopOf="@+id/label_horaFinal_salida"
-            app:layout_constraintVertical_bias="0.474" />
-
         <TextView
             android:id="@+id/label_labor"
             style="@style/style_text"
             android:layout_width="59dp"
             android:layout_height="23dp"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="25dp"
             android:text="@string/label_labor"
             android:textAlignment="center"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="187dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
             android:id="@+id/spinner_labores"
@@ -54,20 +43,6 @@
             app:layout_constraintTop_toTopOf="@+id/label_labor"
             app:layout_constraintVertical_bias="0.0" />
 
-        <TimePicker
-            android:id="@+id/text_horaEntrada"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:ems="10"
-            android:inputType="time"
-            app:layout_constraintBottom_toBottomOf="@+id/label_horaInicial_salida"
-            app:layout_constraintEnd_toStartOf="@+id/label_horaFinal_salida"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/spinner_labores"
-            app:layout_constraintTop_toTopOf="@+id/label_horaInicial_salida"
-            app:layout_constraintVertical_bias="0.49" />
-
 
         <EditText
             android:id="@+id/text_cantidadValue"
@@ -76,24 +51,9 @@
             android:ems="10"
             android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/text_cantidad"
-            app:layout_constraintEnd_toEndOf="@+id/text_horaEntrada"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/text_horaEntrada"
+            app:layout_constraintStart_toStartOf="@+id/spinner_labores"
             app:layout_constraintTop_toTopOf="@+id/text_cantidad"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/label_horaInicial_salida"
-            style="@style/style_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/horaEntrada_txtValue"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/text_cantidad"
-            app:layout_constraintEnd_toEndOf="@+id/label_labor"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/label_labor"
-            app:layout_constraintTop_toBottomOf="@+id/label_labor" />
+            app:layout_constraintVertical_bias="0.571" />
 
         <Button
             android:id="@+id/button2"
@@ -103,26 +63,27 @@
             android:src="@drawable/anule_ico"
             android:text="@string/btn_cerrar"
             android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_guardar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.174"
+            app:layout_constraintHorizontal_bias="0.141"
             app:layout_constraintStart_toEndOf="@+id/btn_guardar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.843" />
+            app:layout_constraintTop_toTopOf="@+id/btn_guardar"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/btn_guardar"
             android:layout_width="139dp"
             android:layout_height="48dp"
-            android:layout_marginStart="732dp"
+            android:layout_marginStart="632dp"
+            android:layout_marginTop="14dp"
             android:background="@color/colorPrimaryDark"
             android:src="@drawable/save_ico"
             android:text="@string/btn_guardar"
             android:textColor="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.84" />
+            app:layout_constraintTop_toBottomOf="@+id/text_comentario"
+            app:layout_constraintVertical_bias="0.602" />
 
         <TextView
             android:id="@+id/text_cantidad"
@@ -135,8 +96,10 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/text_cantidadValue"
-            app:layout_constraintHorizontal_bias="0.203"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_labor"
+            app:layout_constraintVertical_bias="0.224" />
 
         <TextView
             android:id="@+id/text_nameJornalero"
@@ -147,49 +110,65 @@
             android:text="@string/template_name_jornalero"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_guardar"
+            app:layout_constraintHorizontal_bias="0.057"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.937" />
+            app:layout_constraintVertical_bias="0.925" />
 
         <TextView
             android:id="@+id/label_fecha"
             style="@style/style_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
             android:text="@string/label_fecha"
             android:textSize="10pt"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/button2"
             app:layout_constraintEnd_toStartOf="@+id/text_fecha"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/text_nameJornalero"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.938" />
+            app:layout_constraintHorizontal_bias="0.696"
+            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintTop_toTopOf="@+id/button2"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/text_fecha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="63dp"
+            android:layout_height="52dp"
             android:layout_marginEnd="100dp"
             android:text="-----"
             android:textSize="10pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.938" />
+            app:layout_constraintVertical_bias="0.923" />
 
         <TextView
-            android:id="@+id/label_horaFinal_salida"
+            android:id="@+id/label_coment"
             style="@style/style_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:text="@string/text_horaFinal"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_horaEntrada"
-            app:layout_constraintEnd_toStartOf="@+id/text_horaFinal"
-            app:layout_constraintTop_toTopOf="@+id/text_horaEntrada"
-            app:layout_constraintVertical_bias="0.49" />
+            android:layout_marginTop="120dp"
+            android:text="@string/label_observ"
+            app:layout_constraintBottom_toTopOf="@+id/text_nameJornalero"
+            app:layout_constraintEnd_toEndOf="@+id/text_cantidad"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/text_cantidad"
+            app:layout_constraintTop_toBottomOf="@+id/text_cantidad"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/text_comentario"
+            android:layout_width="901dp"
+            android:layout_height="210dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintBottom_toBottomOf="@+id/label_coment"
+            app:layout_constraintEnd_toEndOf="@+id/spinner_labores"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/text_cantidadValue"
+            app:layout_constraintTop_toTopOf="@+id/label_coment"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

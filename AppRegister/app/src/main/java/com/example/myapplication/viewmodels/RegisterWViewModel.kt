@@ -11,6 +11,7 @@ import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.interfaces.RegistroPesadaAPI
 import com.example.myapplication.models.Jornalero
 import com.example.myapplication.models.Labor
+import com.example.myapplication.models.RegisterPost
 import com.example.myapplication.models.RegistroPesada
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -61,12 +62,12 @@ class RegisterWViewModel : ViewModel() {
         _listaLabores.value = mutableListOf()
         _DateF.value = DateFun().date()
         //constructRegister()
-        CoroutineScope(Dispatchers.IO).launch {
+        /*CoroutineScope(Dispatchers.IO).launch {
             Log.i("Init viewmodel", "Coroutine Scope")
             async{
                 getLaboresList()
             }.await()
-        }
+        }*/
     }
     private fun constructRegister(){
         //_registro.value = RegistroPesada(_jornalero.value!!)
@@ -74,12 +75,15 @@ class RegisterWViewModel : ViewModel() {
     }
 
     fun postRegister(){
+        var register = RegisterPost(_jornalero.value!!.cond_jor)
+        Log.i("PostRegister", register.toString())
         try {
             viewModelScope.launch {
-                getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_PUT_",_registro.value!!)
+                getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_PUT_",register)
             }
         }catch (e:Exception){
-
+            e.printStackTrace()
+            Log.i("Exception",e.message)
         }
     }
 

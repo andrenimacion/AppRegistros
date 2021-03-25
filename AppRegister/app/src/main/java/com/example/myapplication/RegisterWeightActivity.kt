@@ -74,9 +74,9 @@ class RegisterWeightActivity : Fragment() {
 
         binding.textFecha.text = viewModel.DateF.value
 
-        binding.btnCerrar?.setOnClickListener {
+        /*binding.btnCerrar?.setOnClickListener {
             view?.findNavController()?.navigate(RegisterWeightActivityDirections.actionRegisterWeightActivityToQrReaderFragment())
-        }
+        }*/
         binding.btnGuardar.setOnClickListener {
             viewModel.postRegister()
         }
