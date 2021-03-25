@@ -1,6 +1,5 @@
 package com.example.myapplication.models
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -24,5 +23,8 @@ data class Jornalero(
         @Expose
         var cond_jor: String
         ):Parcelable{
+                @SerializedName("cod_usuario")
+                var cod_usuario:String = ""
+                        get() {return id}
 
 }

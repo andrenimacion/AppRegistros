@@ -1,6 +1,7 @@
 package com.example.myapplication.interfaces
 
 import com.example.myapplication.models.Jornalero
+import com.example.myapplication.models.RegisterPost
 import com.example.myapplication.models.RegistroPesada
 import com.example.myapplication.models.ResponseText
 import retrofit2.Call
@@ -19,8 +20,8 @@ interface RegistroPesadaAPI {
     @PUT("/api/AR_dp08r/updateworkermodel/{id}")
     fun updateWeightRegister(@Path("id") id:Int, @Body register: RegistroPesada?): Call<RegistroPesada>*/
 
-    @POST("/api/AR_dp08r/UpWorkers/{value}")
-    suspend fun postWeightRegister(@Path("value") value:String, @Body register:RegistroPesada): String
+    @PUT("/api/AR_dp08r/UpWorkers/{value}")
+    suspend fun postWeightRegister(@Path("value") value:String, @Body register: RegisterPost): String
 
     @GET("/api/AR_dp08r/getworkersCODJOR/{valor}")
     fun getTypeTransact(@Path("valor") valor:String): Call<List<ResponseText>>

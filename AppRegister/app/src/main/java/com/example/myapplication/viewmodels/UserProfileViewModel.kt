@@ -12,6 +12,7 @@ import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.interfaces.RegistroPesadaAPI
 import com.example.myapplication.models.Jornalero
 import com.example.myapplication.models.Labor
+import com.example.myapplication.models.RegisterPost
 import com.example.myapplication.models.RegistroPesada
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.coroutineScope
@@ -25,13 +26,23 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class UserProfileViewModel: ViewModel() {
 
-    val _registro = MutableLiveData<RegistroPesada>()
+    private val _registro = MutableLiveData<RegistroPesada>()
     val registro:LiveData<RegistroPesada>
         get() = _registro
 
+    private val _user = MutableLiveData<Jornalero>()
+    val user:LiveData<Jornalero>
+        get() = _user
+
     init {
-        var user = MutableLiveData<Jornalero>()
+        Log.i("UserProfile Init", user.value.toString())
+
     }
+
+    fun setUser(user:Jornalero){
+        _user.value = user
+    }
+
 
     private fun getRetrofit(): Retrofit {
         val gson = GsonBuilder()
@@ -44,13 +55,20 @@ class UserProfileViewModel: ViewModel() {
             .build()
     }
 
-    private fun postEntrance(){
+    fun postEntrance(){
+        //_registro.value = RegistroPesada(_user.value!!)
+        var register = RegisterPost(_user.value!!.cod_usuario)
+        var respon:String = ""
+        Log.i("PostRegister", register.toString())
         viewModelScope.launch {
             try {
-                getRetrofit().create(RegistroPesadaAPI::class.java)
-                    .postWeightRegister("_POST_", _registro.value!!)
-            } catch (e: Exception) {
+                val response = getRetrofit().create(RegistroPesadaAPI::class.java)
+                    .postWeightRegister("_post_", register)
+                Log.i("Response", response)
 
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.i("Exception",e.message)
             }
         }
     }

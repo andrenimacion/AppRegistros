@@ -2,12 +2,14 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.databinding.FragmentUserProfileBinding
@@ -47,8 +49,10 @@ class UserProfile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val userData = args.userType
+        Log.i("user", userData.toString())
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_user_profile, container, false)
         binding.viewModel = viewModel
+        viewModel.setUser(userData)
         binding.userInfo = userData
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -62,10 +66,9 @@ class UserProfile : Fragment() {
         }
 
         binding.entranceButton.setOnClickListener {
-            //postEntrance()
+            viewModel.postEntrance()
+            view?.findNavController()?.navigate(UserProfileDirections.actionUserProfileToQrReaderFragment())
         }
-
-
 
         return binding.root
 
@@ -83,28 +86,9 @@ class UserProfile : Fragment() {
             .build()
     }
 
-    /*private fun postEntrance(){
-        var registro:RegistroPesada = RegistroPesada(binding.userInfo as Jornalero)
-        getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_POST_", registro).enqueue(
-            object: Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    if(response.isSuccessful){
-
-                    }
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-
-            }
-        )
-    }*/
-
-
 
     private fun cancelEntrance(){
-        view?.findNavController()?.navigate(UserProfileDirections.actionUserProfileToQrReaderFragment(binding.userInfo!!))
+        view?.findNavController()?.navigate(UserProfileDirections.actionUserProfileToQrReaderFragment())
     }
 
 }

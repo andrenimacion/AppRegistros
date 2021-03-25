@@ -12,6 +12,7 @@ import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.interfaces.RegistroPesadaAPI
 import com.example.myapplication.models.Jornalero
 import com.example.myapplication.models.Labor
+import com.example.myapplication.models.RegisterPost
 import com.example.myapplication.models.RegistroPesada
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
@@ -77,9 +78,10 @@ class RegisterActivitiyViewModel : ViewModel(){
     }
 
     fun postRegister(){
+        var register = RegisterPost(_jornalero.value!!.cond_jor)
         try {
             viewModelScope.launch {
-                getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_PUT_",_registro.value!!)
+                getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_PUT_",register)
             }
         }catch (e:Exception){
 

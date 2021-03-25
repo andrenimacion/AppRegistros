@@ -99,7 +99,7 @@ class QrReaderFragment : Fragment(){
                             } else {
                                 Log.i("PUT", "Aqui estoy PUT")
                                 view.findNavController()
-                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWFragment())
+                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWFragment(jornalero))
                             }
                         } else {
                             Log.i("Jornalero E", "Empty jornalero")
@@ -189,29 +189,6 @@ class QrReaderFragment : Fragment(){
         }
         return jornalero
     }
-    /*private fun tryGetUser(userCode: Result): Jornalero {
-        var jornalero:Jornalero = Jornalero(userCode.text, "", "", "", "")
-        val response = getRetrofit().create(JornalerosAPI::class.java).getJornaleros(userCode.text).enqueue(
-                object : Callback<Jornalero> {
-                    override fun onResponse(call: Call<Jornalero>, response: Response<Jornalero>) {
-                        if(response.isSuccessful){
-                            Log.i("En response", response.body().toString())
-                            jornalero = response.body()!!
-                            texto.text = jornalero.toString()
-                            Toast.makeText(fActivity, response.message(), Toast.LENGTH_SHORT)
-                        }
-                    }
-
-                    override fun onFailure(call: Call<Jornalero>, t: Throwable) {
-                        Log.d("En Failure", t.toString())
-                        Log.d("En Failure", t.message)
-                        Toast.makeText(fActivity, t.message, Toast.LENGTH_SHORT)
-                    }
-                })
-
-        Log.d("Final try user", jornalero.toString())
-        return jornalero
-    }*/
 
     private fun getTransact(userCode: Result):String{
         lateinit var typeTransact:String
@@ -225,45 +202,6 @@ class QrReaderFragment : Fragment(){
         return typeTransact
     }
 
-    /*private fun getTransact(userCode: Result): String{
-        //val transactID = getTransactID(userCode.text)
-        lateinit var typeTransact:String
-        val response = getRetrofit().create(RegistroPesadaAPI::class.java).getTypeTransact(userCode.text).enqueue(
-            object:Callback<String>{
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    if(response.isSuccessful){
-                        typeTransact = response.body() as String
-                    }
-                }
-                @SuppressLint("ShowToast")
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Log.e("On Failure", t.message)
-                    Toast.makeText(fActivity,t.message, Toast.LENGTH_SHORT)
-                }
-
-            }
-        )
-        return typeTransact;
-    }*/
-
-   /* private fun getContent(){
-
-        GlobalScope.launch(Dispatchers.IO){
-            val response = getRetrofit().create(LaboresAPI::class.java).getLabores().awaitResponse()
-            if(response.isSuccessful){
-                val data = response.body()!!
-                Log.d("MainActivity", data[0].codlab)
-                withContext(Dispatchers.Main){
-                    data.forEach{
-                        texto.text = it.toString()
-                    }
-                    //texto.text = data[0].codlab
-                    print(texto.text)
-                }
-            }
-        }
-
-    }*/
 
 
 }
