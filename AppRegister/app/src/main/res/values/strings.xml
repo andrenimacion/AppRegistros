@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">RegisterApp</string>
     <string name="profileImage_description" />
     <string name="welcome_message">Bienvenido!</string>
     <string name="nombre_value">"Nombre: "</string>
@@ -8,6 +8,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lector_qr">Lector QR</string>
+    <string name="descrip_lector_qr">Ubica tu código en el visor de la cámara para marcar.</string>
     <string name="avatar_description">Imagen avatar de perfil</string>
     <string name="entrance_button_value">Ingresar</string>
     <string name="btn_guardar">Guardar</string>
