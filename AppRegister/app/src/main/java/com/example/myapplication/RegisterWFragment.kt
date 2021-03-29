@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TimePicker
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,7 +18,6 @@ import com.example.myapplication.models.Labor
 import com.example.myapplication.models.RegistroPesada
 import com.example.myapplication.viewmodels.RegisterWViewModel
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.fragment_register_w.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
@@ -39,7 +36,7 @@ class RegisterWFragment : Fragment(){
     }
     private var arrayAdapter: ArrayAdapter<Labor>? = null
     private lateinit var register: RegistroPesada
-    private var laboresList: List<Labor> = ArrayList()
+    private var laboresList: MutableList<Labor> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +44,7 @@ class RegisterWFragment : Fragment(){
         Log.i("Estoy en Register", args.userType.toString())
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_register_w, container, false)
-
+        //laboresList.add(Labor("0001", "Jo", "as", "as"))
         requireActivity().runOnUiThread{
             CoroutineScope(IO).launch {
                 async {
@@ -57,17 +54,13 @@ class RegisterWFragment : Fragment(){
         }
         binding.viewModel = viewModel
         binding.userInfo = args.userType
+        Log.i("Fragment", "Estoy antes de register")
         register = RegistroPesada(binding.userInfo!!)
-        arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
+        arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,
             laboresList as MutableList<Labor>
         )
-        /*binding.textHoraEntrada.setOnTimeChangedListener{ timePicker: TimePicker, i: Int, i1: Int ->
-            var date = DateFun()
-            var dateFull = DateFun().date() + " " + i + ":" + i1
-            //registroModel.fecha_s = dateFull
-            Log.i("TAG", dateFull)
 
-        }*/
+        arrayAdapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.btnGuardar.setOnClickListener {
             saveRegister()
@@ -85,6 +78,8 @@ class RegisterWFragment : Fragment(){
             }
 
         }
+
+        binding.spinnerLabores.adapter = arrayAdapter
         return binding.root
 
     }
@@ -102,7 +97,8 @@ class RegisterWFragment : Fragment(){
     private fun getLaboresList(){
         try {
             val response = LaboresAPI.retrofitService.getLaboresSynchro().execute()
-            laboresList = response.body()!!
+            laboresList = (response.body() as MutableList<Labor>?)!!
+            Log.i("Estoy en labores",laboresList.toString())
         }catch (e:Exception){
             e.printStackTrace()
         }

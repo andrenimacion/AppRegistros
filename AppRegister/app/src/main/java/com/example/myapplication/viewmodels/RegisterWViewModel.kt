@@ -23,8 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class RegisterWViewModel : ViewModel() {
-    private var _listaLabores = MutableLiveData<List<Labor>>()
-    val listaLabores: LiveData<List<Labor>>
+    private var _listaLabores = MutableLiveData<MutableList<Labor>>()
+    val listaLabores: LiveData<MutableList<Labor>>
         get() = _listaLabores
 
     private val _response = MutableLiveData<String>()
@@ -65,13 +65,9 @@ class RegisterWViewModel : ViewModel() {
         /*CoroutineScope(Dispatchers.IO).launch {
             Log.i("Init viewmodel", "Coroutine Scope")
             async{
-                getLaboresList()
+                _listaLabores.value = getLaboresList()
             }.await()
         }*/
-    }
-    private fun constructRegister(){
-        //_registro.value = RegistroPesada(_jornalero.value!!)
-        //_registro.value!!.fecha = DateFun().date()!!
     }
 
     fun postRegister(){
@@ -111,14 +107,15 @@ class RegisterWViewModel : ViewModel() {
             }
         }
     }*/
-    private fun getLaboresList(){
+    private fun getLaboresList(): MutableList<Labor>? {
+        var lista = ArrayList<Labor>()
         try {
             val response = LaboresAPI.retrofitService.getLaboresSynchro().execute()
-            _listaLabores.value = response.body()
+            lista = response.body() as ArrayList<Labor>
         }catch (e:Exception){
             e.printStackTrace()
         }
-
+    return lista
     }
 
     override fun onCleared() {
