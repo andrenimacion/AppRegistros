@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 data class Jornalero(
         @SerializedName("codjor")
         @Expose
-        private val id: String,
+        val id: String,
         @SerializedName("cedula")
         @Expose
         var cedula: String,

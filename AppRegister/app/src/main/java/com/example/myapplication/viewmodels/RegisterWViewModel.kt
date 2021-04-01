@@ -61,6 +61,7 @@ class RegisterWViewModel : ViewModel() {
         Log.i("Init viewmodel", "Inicia el view model")
         _listaLabores.value = mutableListOf()
         _DateF.value = DateFun().date()
+
         //constructRegister()
         /*CoroutineScope(Dispatchers.IO).launch {
             Log.i("Init viewmodel", "Coroutine Scope")
@@ -68,19 +69,26 @@ class RegisterWViewModel : ViewModel() {
                 _listaLabores.value = getLaboresList()
             }.await()
         }*/
+        _registro.value = RegistroPesada()
     }
 
     fun postRegister(){
-        var register = RegisterPost(_jornalero.value!!.cond_jor)
+        val register = RegisterPost(_registro.value!!.cod_usuario!!.id, _registro.value!!.cantidad,_registro.value!!.cod_labor!!.codlab, _registro.value!!.observaciones)
         Log.i("PostRegister", register.toString())
-        try {
-            viewModelScope.launch {
-                getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_PUT_",register)
+        viewModelScope.launch {
+            try {
+                val responsed = getRetrofit().create(RegistroPesadaAPI::class.java).postWeightRegister("_put_",register)
+                    Log.i("Here", responsed)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                    Log.i("Exception",e.message)
             }
-        }catch (e:Exception){
-            e.printStackTrace()
-            Log.i("Exception",e.message)
+
         }
+    }
+
+    fun updateList(lista:ArrayList<Labor>){
+        this._listaLabores.value = lista
     }
 
 
@@ -107,6 +115,10 @@ class RegisterWViewModel : ViewModel() {
             }
         }
     }*/
+    fun setJornalero(jornalero:Jornalero){
+        Log.i("SetJorn", jornalero.toString())
+        this._jornalero.value = jornalero
+    }
     private fun getLaboresList(): MutableList<Labor>? {
         var lista = ArrayList<Labor>()
         try {

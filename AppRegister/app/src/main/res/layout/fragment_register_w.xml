@@ -23,35 +23,36 @@
             style="@style/style_text"
             android:layout_width="59dp"
             android:layout_height="23dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="40dp"
             android:text="@string/label_labor"
             android:textAlignment="center"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/text_cantidad"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/label_ExitRegisterTitle"
+            app:layout_constraintVertical_bias="0.159" />
 
         <Spinner
             android:id="@+id/spinner_labores"
             android:layout_width="0dp"
             android:layout_height="29dp"
-            android:layout_marginStart="60dp"
-            app:layout_constraintBottom_toBottomOf="@+id/label_labor"
-            app:layout_constraintEnd_toEndOf="@+id/text_fecha"
+            android:layout_marginStart="75dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/label_labor"
-            app:layout_constraintTop_toTopOf="@+id/label_labor"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/label_labor" />
+
         <EditText
             android:id="@+id/text_cantidadValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
-            app:layout_constraintBottom_toBottomOf="@+id/text_cantidad"
+            app:layout_constraintBottom_toTopOf="@+id/text_comentario"
             app:layout_constraintStart_toStartOf="@+id/spinner_labores"
             app:layout_constraintTop_toTopOf="@+id/text_cantidad"
-            app:layout_constraintVertical_bias="0.571" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/button2"
@@ -63,7 +64,6 @@
             android:textColor="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="@+id/btn_guardar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.141"
             app:layout_constraintStart_toEndOf="@+id/btn_guardar"
             app:layout_constraintTop_toTopOf="@+id/btn_guardar"
             app:layout_constraintVertical_bias="0.0" />
@@ -72,32 +72,26 @@
             android:id="@+id/btn_guardar"
             android:layout_width="139dp"
             android:layout_height="48dp"
-            android:layout_marginStart="632dp"
-            android:layout_marginTop="14dp"
             android:background="@color/colorPrimaryDark"
             android:src="@drawable/save_ico"
             android:text="@string/btn_guardar"
             android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_comentario"
-            app:layout_constraintVertical_bias="0.602" />
+            app:layout_constraintBottom_toTopOf="@+id/text_nameJornalero"
+            app:layout_constraintEnd_toStartOf="@+id/button2"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/text_cantidad"
             style="@style/style_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginBottom="144dp"
+            android:layout_width="74dp"
+            android:layout_height="23dp"
+            android:layout_marginBottom="100dp"
             android:text="@string/text_cantidad"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/label_coment"
             app:layout_constraintEnd_toStartOf="@+id/text_cantidadValue"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_labor"
-            app:layout_constraintVertical_bias="0.224" />
+            app:layout_constraintStart_toStartOf="@+id/label_labor" />
 
         <TextView
             android:id="@+id/text_nameJornalero"
@@ -105,14 +99,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
+            android:layout_marginBottom="40dp"
             android:text="@string/template_name_jornalero"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_guardar"
-            app:layout_constraintHorizontal_bias="0.057"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.925" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/label_fecha"
@@ -121,52 +112,72 @@
             android:layout_height="wrap_content"
             android:text="@string/label_fecha"
             android:textSize="10pt"
-            app:layout_constraintBottom_toBottomOf="@+id/button2"
+            app:layout_constraintBottom_toBottomOf="@+id/text_nameJornalero"
             app:layout_constraintEnd_toStartOf="@+id/text_fecha"
-            app:layout_constraintHorizontal_bias="0.696"
-            app:layout_constraintStart_toEndOf="@+id/button2"
-            app:layout_constraintTop_toTopOf="@+id/button2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.875"
+            app:layout_constraintStart_toEndOf="@+id/text_nameJornalero"
+            app:layout_constraintTop_toTopOf="@+id/text_nameJornalero"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/text_fecha"
-            android:layout_width="63dp"
-            android:layout_height="52dp"
-            android:layout_marginEnd="100dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="40dp"
             android:text="-----"
             android:textSize="10pt"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/label_fecha"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.923" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/button2"
+            app:layout_constraintTop_toTopOf="@+id/label_fecha"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/label_coment"
             style="@style/style_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
             android:text="@string/label_observ"
-            app:layout_constraintBottom_toTopOf="@+id/text_nameJornalero"
-            app:layout_constraintEnd_toEndOf="@+id/text_cantidad"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_guardar"
+            app:layout_constraintEnd_toStartOf="@+id/text_comentario"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/text_cantidad"
-            app:layout_constraintTop_toBottomOf="@+id/text_cantidad"
+            app:layout_constraintTop_toTopOf="@+id/text_comentario"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/text_comentario"
-            android:layout_width="901dp"
-            android:layout_height="210dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="120dp"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            app:layout_constraintBottom_toBottomOf="@+id/label_coment"
+            app:layout_constraintBottom_toTopOf="@+id/btn_guardar"
             app:layout_constraintEnd_toEndOf="@+id/spinner_labores"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/text_cantidadValue"
-            app:layout_constraintTop_toTopOf="@+id/label_coment"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="@+id/text_cantidadValue" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/logoexpos" />
+
+        <TextView
+            android:id="@+id/label_ExitRegisterTitle"
+            style="@style/style_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_exitRegister"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

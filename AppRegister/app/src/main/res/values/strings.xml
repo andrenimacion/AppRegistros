@@ -19,4 +19,6 @@
     <string name="text_horaFinal">Hora Final:</string>
     <string name="text_cantidad">Cantidad</string>
     <string name="label_observ">Observaciones</string>
+    <string name="label_jornData">Datos de jornalero</string>
+    <string name="title_exitRegister">Registro de salidas</string>
 </resources>

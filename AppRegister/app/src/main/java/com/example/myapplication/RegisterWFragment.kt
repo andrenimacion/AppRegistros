@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.databinding.FragmentRegisterWBinding
@@ -44,7 +46,7 @@ class RegisterWFragment : Fragment(){
         Log.i("Estoy en Register", args.userType.toString())
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_register_w, container, false)
-        //laboresList.add(Labor("0001", "Jo", "as", "as"))
+
         requireActivity().runOnUiThread{
             CoroutineScope(IO).launch {
                 async {
@@ -54,10 +56,14 @@ class RegisterWFragment : Fragment(){
         }
         binding.viewModel = viewModel
         binding.userInfo = args.userType
+        viewModel.updateList(args.laboresList as ArrayList<Labor>)
+        viewModel.setJornalero(args.userType)
+
+        Log.i("Lista en register", args.laboresList.toString())
         Log.i("Fragment", "Estoy antes de register")
         register = RegistroPesada(binding.userInfo!!)
         arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,
-            laboresList as MutableList<Labor>
+            viewModel.listaLabores.value as MutableList<Labor>
         )
 
         arrayAdapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -69,8 +75,16 @@ class RegisterWFragment : Fragment(){
         binding.spinnerLabores.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 binding.btnGuardar.isClickable = true
-                register.cod_labor = laboresList[p2]
-                binding.textCantidad.isFocusable = laboresList[p2].can_hor == "C"
+                register.cod_labor = viewModel.listaLabores.value!![p2]
+                binding.textCantidadValue.isFocusable = viewModel.listaLabores.value!![p2].can_hor == "C"
+                binding.textCantidadValue.isFocusableInTouchMode = viewModel.listaLabores.value!![p2].can_hor == "C"
+                if (!binding.textCantidadValue.isFocusable){
+                    binding.textCantidadValue.setBackgroundColor(Color.LTGRAY)
+                    binding.textCantidadValue.text.clear()
+                }else{
+                    binding.textCantidadValue.setBackgroundColor(Color.TRANSPARENT)
+                }
+                Log.i("Estoy en", binding.textCantidadValue.isFocusable.toString())
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -78,6 +92,13 @@ class RegisterWFragment : Fragment(){
             }
 
         }
+        //val jornaleroName1 = "${viewModel.jornalero.value!!.nombre}+${viewModel.jornalero.value!!.apellido}"
+        //binding.textNameJornalero.text = jornaleroName1
+        /*viewModel.jornalero.observe(viewLifecycleOwner, Observer {
+            val jornaleroName = "${it.nombre} ${it.apellido}"
+            Log.i("Jorn", jornaleroName)
+            binding.textNameJornalero.text = jornaleroName
+        })*/
 
         binding.spinnerLabores.adapter = arrayAdapter
         return binding.root
@@ -107,7 +128,7 @@ class RegisterWFragment : Fragment(){
 
     private fun saveRegister(){
         viewModel.registro.value?.cod_labor = binding.spinnerLabores.selectedItem as Labor?
-        viewModel.registro.value?.cantidad = (binding.textCantidad.text.toString() as Int).toFloat()
+        viewModel.registro.value?.cantidad = binding.textCantidadValue.text.toString().toFloat()
         //register.observaciones = binding.textComentario.text
         /*var hour = binding.textHoraFinal.hour.toString()
         var minutes = binding.textHoraFinal.minute.toString()
@@ -116,6 +137,7 @@ class RegisterWFragment : Fragment(){
             var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
             viewModel.registro.value?.fecha_s = LocalDateTime.parse(time,formatter)
         }*/
+        viewModel.registro.value?.cod_usuario = binding.userInfo!!
         viewModel.postRegister()
         view?.findNavController()?.navigate(RegisterWFragmentDirections.actionRegisterWFragmentToQrReaderFragment())
 

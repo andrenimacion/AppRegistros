@@ -16,8 +16,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import com.budiyev.android.codescanner.*
 import com.example.myapplication.interfaces.JornalerosAPI
+import com.example.myapplication.interfaces.LaboresAPI
 import com.example.myapplication.interfaces.RegistroPesadaAPI
 import com.example.myapplication.models.Jornalero
+import com.example.myapplication.models.Labor
 import com.google.gson.GsonBuilder
 import com.google.zxing.Result
 import kotlinx.coroutines.*
@@ -97,17 +99,19 @@ class QrReaderFragment : Fragment(){
                                     )
                                 )
                             } else {
+                                val listaLabores = async {
+                                    getListaLabores()
+                                }.await()
                                 Log.i("PUT", "Aqui estoy PUT")
                                 view.findNavController()
-                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWFragment(jornalero))
+                                    .navigate(QrReaderFragmentDirections.actionQrReaderFragmentToRegisterWFragment(jornalero, listaLabores as ArrayList<Labor>))
                             }
                         } else {
                             Log.i("Jornalero E", "Empty jornalero")
-                            Toast.makeText(
-                                fActivity,
-                                "Error en búsqueda de usuario",
-                                Toast.LENGTH_SHORT
-                            )
+                            fActivity.runOnUiThread {
+                                Toast.makeText(fActivity, "API CONNECTION ERROR", Toast.LENGTH_SHORT).show()
+                            }
+                            ScanMode.SINGLE
                         }
                     }
                 }
@@ -178,6 +182,17 @@ class QrReaderFragment : Fragment(){
         }
     }
 
+    private fun getListaLabores():List<Labor>{
+        var laboresList:MutableList<Labor> = ArrayList()
+        try {
+            val response = LaboresAPI.retrofitService.getLaboresSynchro().execute()
+            laboresList = (response.body() as MutableList<Labor>?)!!
+            Log.i("Estoy en labores",laboresList.toString())
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return laboresList
+    }
 
     private fun tryGetUser(userCode: Result):Jornalero{
         var jornalero:Jornalero = Jornalero(userCode.text, "", "", "", "")

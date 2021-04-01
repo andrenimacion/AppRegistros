@@ -53,6 +53,7 @@ class UserProfile : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_user_profile, container, false)
         binding.viewModel = viewModel
         viewModel.setUser(userData)
+
         binding.userInfo = userData
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -69,6 +70,8 @@ class UserProfile : Fragment() {
             viewModel.postEntrance()
             view?.findNavController()?.navigate(UserProfileDirections.actionUserProfileToQrReaderFragment())
         }
+
+
 
         return binding.root
 

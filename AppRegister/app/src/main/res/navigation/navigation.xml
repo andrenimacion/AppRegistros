@@ -38,5 +38,8 @@
         <argument
             android:name="userType"
             app:argType="com.example.myapplication.models.Jornalero" />
+        <argument
+            android:name="laboresList"
+            app:argType="java.util.ArrayList" />
     </fragment>
 </navigation>

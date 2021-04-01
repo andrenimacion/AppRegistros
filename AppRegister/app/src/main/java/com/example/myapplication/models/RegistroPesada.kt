@@ -12,7 +12,7 @@ data class RegistroPesada(
     val id: Int,
     var fecha: LocalDateTime?,
     //@SerializedName("Jornalero")
-    val cod_usuario: Jornalero?,
+    var cod_usuario: Jornalero?,
     var cod_labor: Labor?,
     var cantidad: Float,
     val foto: String,
@@ -20,11 +20,9 @@ data class RegistroPesada(
     val observaciones: String,
     val auditado: Int,
     val user_auditado: String,
-    val fecha_auditado: LocalDateTime?,
-    //@SerializedName("cod_usuario")
-    //@Expose
-    val cod_user: String = cod_usuario!!.cond_jor
+    val fecha_auditado: LocalDateTime?
 ){
     constructor(cod_usuario: Jornalero): this(0, null,cod_usuario,null,0.0f,"",null, "",0,"",null)
+    constructor():this(0, null,null,null,0.0f,"",null, "",0,"",null)
 }
 
